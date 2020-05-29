@@ -6,8 +6,8 @@ import {Line, Bar} from 'react-chartjs-2';
 
 import styles from './Chart.module.css';
 
-const Chart = () => {
-    const [dailyData, setDailyData] = useState([]);  // initial state will be an empty array from the fetched API website, as the daily data are all array data
+const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {
+    const [dailyData, setDailyData] = useState({});  // initial state will be an empty array from the fetched API website, as the daily data are all array data
 
     useEffect(() => {
         const fetchAPI = async () => {
@@ -16,7 +16,7 @@ const Chart = () => {
 
         // console.log(dailyData);
         fetchAPI();
-    });
+    }, []); // Here is very important to add "[]" as if not adding this, the fectchAPI call will keep fetching, so we need to add it to only call once to improve the performance
 
     const lineChart = (
         // since dailyData is an array, it has the length,
@@ -47,10 +47,34 @@ const Chart = () => {
             ) : null
     );
 
+    const barChart = (
+        confirmed
+            ?
+            (
+                <Bar
+                    data={{
+                        labels: ['Infected', 'Recovered', 'Deaths'],
+                        datasets: [{
+                            label: 'People',
+                            backgroundColor: [
+                                'rgba(0, 0, 255, 0.5)',
+                                'rgba(0, 255, 0, 0.5)',
+                                'rgba(255, 0, 0, 0.5)',
+                            ],
+                            data: [confirmed.value, recovered.value, deaths.value]
+                        }]
+                    }}
+                    options={{
+                        legend: {display: false},
+                        title: { display: true, text: `Current state in ${country}` }
+                    }}
+                />
+            ) : null
+    );
 
     return (
         <div className={styles.container}>
-            {lineChart}
+            { country? barChart : lineChart}
         </div>
     )
 };
