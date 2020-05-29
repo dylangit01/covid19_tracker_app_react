@@ -5,5 +5,8 @@ body {
 .container {
     display: flex;
     justify-content: center;
-    align-content: center;
+    align-items: center;
+    /*below codes can move the chart below the cards*/
+    flex-direction: column;
 }
+
