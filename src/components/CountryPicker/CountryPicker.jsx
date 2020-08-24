@@ -8,7 +8,7 @@ import {fetchCountries} from "../../api";
 
 // After we setup the country state and the handleCountryChange function in App.js,
 // Then CountryPicker can make use of that coming through props:
-// So here we can immediately destructed it and use it in the <NativeSelect>
+// So here we can immediately destructed it "(props), const {handleCountryChange} = props";  and use it in the <NativeSelect>
 const CountryPicker = ({ handleCountryChange }) => {
     const [countriesData, setCountriesData] = useState([]);
 
@@ -20,7 +20,7 @@ const CountryPicker = ({ handleCountryChange }) => {
         fetchCountriesAPI()
         // [setCountriesData] means "if present, effect will only active if the value in the list change."
         // so this fectchCountriesAPI only works when we click and make changes
-    }, [setCountriesData]);
+    }, [countriesData]);
 
     // console.log(countriesData)
 

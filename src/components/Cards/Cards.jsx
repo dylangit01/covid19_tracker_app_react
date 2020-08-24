@@ -8,7 +8,6 @@ import cx from 'classnames'
 import {Card, CardContent, Typography, Grid} from "@material-ui/core";
 
 const Cards = ({data: {confirmed, recovered, deaths, lastUpdate}}) => {
-
     if (!confirmed) return 'Loading...';
 
     return (

@@ -6,8 +6,8 @@ import {Line, Bar} from 'react-chartjs-2';
 
 import styles from './Chart.module.css';
 
-const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {
-    const [dailyData, setDailyData] = useState({});  // initial state will be an empty array from the fetched API website, as the daily data are all array data
+const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {    // this destructing {data: {confirmed, recovered, deaths}, country} are for barChart only, but lineChart data source is from fetchAPI only
+    const [dailyData, setDailyData] = useState([]);  // initial state will be an empty array from the fetched API website, as the daily data are all array data
 
     useEffect(() => {
         const fetchAPI = async () => {
@@ -16,7 +16,7 @@ const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {
 
         // console.log(dailyData);
         fetchAPI();
-    }, []); // Here is very important to add "[]" as if not adding this, the fectchAPI call will keep fetching, so we need to add it to only call once to improve the performance
+    }, [dailyData]); // Here is very important to add "[]" as if not adding this, the fectchAPI call will keep fetching, so we need to add it to only call once to improve the performance
 
     const lineChart = (
         // since dailyData is an array, it has the length,
@@ -34,6 +34,7 @@ const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {
                             data: dailyData.map(({ confirmed }) => confirmed),
                             label: 'Infected',
                             borderColor: '#3333ff',
+                            backgroundColor: 'lightblue',
                             fill: true,
                         }, {
                             data: dailyData.map(({deaths}) => deaths),

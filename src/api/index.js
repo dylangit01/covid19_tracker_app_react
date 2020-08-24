@@ -13,8 +13,9 @@ export const fetchData = async (country) => {
     // but when there is a country, it will correspond that specific country data
 
     try {
-        const {data: { confirmed, recovered, deaths, lastUpdate }} = await axios.get(changeableUrl);
-        return { confirmed, recovered, deaths, lastUpdate };
+        const {data} = await axios.get(changeableUrl);
+        // console.log({data: {confirmed: confirmed.value, recovered: recovered.value, deaths: deaths.value, lastUpdate }});
+        return data
 
     } catch (e) {
         console.log(e)
@@ -29,7 +30,7 @@ export const fetchDailyData = async () => {
 
         // since the data is an array, and inside the array are many objects,
         // what we need are the properties of each object, so need to use array map method to get every object
-        // and return the specific value of each object, and because there are more than one item(confirmed, deaths and reportDate) need to be fetched from the web api data,
+        // and return the specific value of each object, and because there are more than one item(confirmed, deaths and reportDate) needs to be fetched from the web api data,
         // that's why it's not feasible to destruct the data from above await and get method,
         // because we CANNOT use map method for multiple properties as this:
         // const {data: {confirmed, deaths, reportDate}} = await axios.get(url); return {confirmed, deaths, reportDate}.map ==> no such way to use map
@@ -52,6 +53,7 @@ export const fetchCountries = async () => {
     try {
         const {data: {countries}} = await axios.get(`${url}/countries`);
         return countries.map( country => country.name);
+        // this return the countries' name, so in jsx, it also only shows the name
 
         // console.log(response)
 
